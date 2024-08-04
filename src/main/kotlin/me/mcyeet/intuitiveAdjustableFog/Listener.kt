@@ -55,26 +55,10 @@ class Listener: Listener, PacketListenerAbstract() {
             return
 
         val viewDistance = Config.get<Int>("View_Distance")
+        val packet = WrapperPlayServerJoinGame(event)
 
-        when (event.packetType) {
-            PacketType.Play.Server.JOIN_GAME -> {
-                val packet = WrapperPlayServerJoinGame(event)
-                packet.simulationDistance = viewDistance
-                packet.viewDistance = viewDistance
-            }
-
-            PacketType.Play.Server.UPDATE_VIEW_DISTANCE -> {
-                println("\nPANIC! PANIC! PANIC! PANIC! PANIC! PANIC! PANIC!")
-                val packet = WrapperPlayServerUpdateViewDistance(event)
-                packet.viewDistance = viewDistance
-            }
-
-            PacketType.Play.Server.UPDATE_SIMULATION_DISTANCE -> {
-                println("\nPANIC! PANIC! PANIC! PANIC! PANIC! PANIC! PANIC!")
-                val packet = WrapperPlayServerUpdateSimulationDistance(event)
-                packet.simulationDistance = viewDistance
-            }
-        }
+        packet.simulationDistance = viewDistance
+        packet.viewDistance = viewDistance
     }
 
 }
