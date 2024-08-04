@@ -1,9 +1,13 @@
-name: Template-Plugin
+name: IntuitiveAdjustableFog
 version: '${version}'
-main: me.mcyeet.templateplugin.Template_Plugin
+main: me.mcyeet.intuitiveAdjustableFog.IntuitiveAdjustableFog
 api-version: '1.16'
-depend: [Vault]
+depend: [Vault, packetevents]
 authors: [MrMcyeet]
+permissions:
+  "intuitiveadjustablefog.ignoreme":
+    description: "Disables this plugin from modifying packets sent to you"
+    default: false
 libraries:
   - org.jetbrains.kotlin:kotlin-stdlib:1.9.0
-#  - dev.jorel:commandapi-bukkit-shade:9.3.0
+#  - dev.jorel:commandapi-bukkit-shade:9.5.1

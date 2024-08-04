@@ -1,15 +1,17 @@
-package me.mcyeet.templateplugin
+package me.mcyeet.intuitiveAdjustableFog
 
-import me.mcyeet.templateplugin.utils.YamlDocument
+import com.github.retrooper.packetevents.PacketEvents
+import com.github.retrooper.packetevents.event.PacketListenerAbstract
+import io.github.retrooper.packetevents.factory.spigot.SpigotPacketEventsBuilder
+import me.mcyeet.intuitiveAdjustableFog.utils.YamlDocument
 import org.bukkit.Bukkit
 import org.bukkit.event.Listener
 import org.bukkit.plugin.java.JavaPlugin
 import org.reflections.Reflections
 import java.io.File
 import java.io.FileNotFoundException
-import kotlin.properties.Delegates
 
-class Template_Plugin: JavaPlugin() {
+class IntuitiveAdjustableFog: JavaPlugin() {
     companion object {
         lateinit var Config: YamlDocument
         lateinit var Plugin: JavaPlugin
@@ -41,8 +43,8 @@ class Template_Plugin: JavaPlugin() {
         Plugin = this
 
         //Load PacketEvents
-        //PacketEvents.setAPI(SpigotPacketEventsBuilder.build(Plugin))
-        //PacketEvents.getAPI().settings.checkForUpdates(false)
+        PacketEvents.setAPI(SpigotPacketEventsBuilder.build(Plugin))
+        PacketEvents.getAPI().settings.checkForUpdates(false)
 
         //Load CommandAPI
         //CommandAPI.onLoad(CommandAPIBukkitConfig(Plugin).silentLogs(true))
@@ -74,14 +76,14 @@ class Template_Plugin: JavaPlugin() {
         //    logger.info("Successfully registered $size commands!")
         //}
 
-        //reflections.getSubTypesOf(PacketListenerAbstract::class.java).apply {
-        //    this.forEach {
-        //        val eventClass = it.getDeclaredConstructor().newInstance()
-        //        PacketEvents.getAPI().eventManager.registerListener(eventClass)
-        //    }
-        //
-        //    Plugin.logger.info("Successfully registered $size packet listeners!")
-        //}
+        reflections.getSubTypesOf(PacketListenerAbstract::class.java).apply {
+            this.forEach {
+                val eventClass = it.getDeclaredConstructor().newInstance()
+                PacketEvents.getAPI().eventManager.registerListener(eventClass)
+            }
+
+            Plugin.logger.info("Successfully registered $size packet listeners!")
+        }
 
         //PacketEvents.getAPI().init()
     }
@@ -90,7 +92,7 @@ class Template_Plugin: JavaPlugin() {
         ConfigReloadTask.cancel()
 
         //Terminate PacketEvents
-        //PacketEvents.getAPI().terminate()
+        PacketEvents.getAPI().terminate()
 
         //Terminate CommandAPI
         //CommandAPI.onDisable()

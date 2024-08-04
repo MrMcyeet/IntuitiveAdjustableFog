@@ -37,7 +37,9 @@ dependencies {
     //compileOnly("me.clip:placeholderapi:2.11.4")
 
     //Commands
-    compileOnly("dev.jorel:commandapi-bukkit-shade:9.3.0")
+    //Actually just shade this so paper can remap it. Without actually shading it, there would have to be two different builds. one with the mojang-mapped version
+    //in the plugin.yml and one with the spigot-mapped version
+    //implementation("dev.jorel:commandapi-bukkit-shade:9.5.1")
     //compileOnly("org.incendo:cloud-paper:2.0.0-beta.2")
 
     implementation("org.reflections:reflections:0.9.12")
